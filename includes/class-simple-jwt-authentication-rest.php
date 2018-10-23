@@ -194,6 +194,15 @@ class Simple_Jwt_Authentication_Rest {
 		if ( $validate_uri > 0 ) {
 			return $user;
 		}
+
+		/*
+		 * if the request is for the WPE CPP plugin route, let it go
+		 */
+		$cpp_uri = strpos( $_SERVER['REQUEST_URI'], 'cpp/v1' );
+		if ( $cpp_uri > 0 ) {
+			return $user;
+		}
+
 		$token = $this->validate_token( false );
 
 		if ( is_wp_error( $token ) ) {
